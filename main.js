@@ -68,7 +68,6 @@ function getCarrito () {
 
 function saveCarrito (carrito) {
   localStorage.setItem('carrito', JSON.stringify(carrito));
-  console.log(carrito)
 }
 
 function borrarProductoDelCarrito(producto) {
@@ -102,7 +101,7 @@ function renderCarrito() {
       <p>Subtotal: $${precio * cantidad}</p>
       </div>
     `;
-    
+
     contenedorCarrito.append(div);
   }
 }
