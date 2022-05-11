@@ -91,10 +91,15 @@ function saveCarrito (carrito) {
   localStorage.setItem('carrito', JSON.stringify(carrito));
 }
 
+// Funcion para borrar un producto del carrito
 function borrarProductoDelCarrito(producto) {
   const carrito = getCarrito();
+  
+  // Crear un nuevo array que contenga todos los productos menos el borrado 
   const nuevoCarrito = carrito.filter(item => item.id != producto.id);
+  // Guardar ese nuevo array en local storage
   saveCarrito(nuevoCarrito);
+  // Mostrar el carrito actualizado
   renderCarrito();
 }
 
