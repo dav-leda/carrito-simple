@@ -47,7 +47,7 @@ for (let producto of productos) {
   // Agregar el div al DOM
   contenedorProductos.append(div)
 
-  // Seleccionar los botones
+  // Seleccionar los botones por su ID en el DOM
   const botonAgregar = select(`#addToCart-${id}`);
   const botonEliminar = select(`#removeFromCart-${id}`);
 
