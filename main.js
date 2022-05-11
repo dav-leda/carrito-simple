@@ -52,7 +52,7 @@ for (let producto of productos) {
   const botonEliminar = select(`#removeFromCart-${id}`);
 
   // Agregar los event listeners a los botones
-  // Pasarle por parametro el producto a las funciones
+  // Pasarle por parametro el producto a los callbacks del evento
   botonAgregar.addEventListener("click", () => addToCart(producto));
   botonEliminar.addEventListener("click", () => borrarProductoDelCarrito(producto));
 }
@@ -62,8 +62,8 @@ function addToCart(producto) {
 
   // Obtener el carrito de local storage
   const carrito = getCarrito();
-  // Encontrar el producto por su ID, si no encuentra nada retorna false
-  const productoEnCarrito = carrito.find(item => item.id === producto.id) || false;
+  // Buscar el producto en el carrito por su ID
+  const productoEnCarrito = carrito.find(item => item.id === producto.id);
 
   // Si el producto ya esta en el carrito, aumentar la cantidad
   if (productoEnCarrito) {
