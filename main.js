@@ -76,11 +76,7 @@ function addToCart(producto) {
   }
 
   // Mostrar alert con Sweet Alert
-  Swal.fire({
-    title: 'Producto agregado al carrito!',
-    icon: 'success',
-    timer: 1200
-  })
+  mostrarAlert('Producto agregado al carrito');
 
   // Guardar el carrito en local storage
   saveCarrito(carrito)
@@ -99,16 +95,30 @@ function saveCarrito (carrito) {
   localStorage.setItem('carrito', JSON.stringify(carrito));
 }
 
+
 // Funcion para borrar un producto del carrito
 function borrarProductoDelCarrito(producto) {
+  
   const carrito = getCarrito();
   
-  // Crear un nuevo array que contenga todos los productos menos el borrado 
-  const nuevoCarrito = carrito.filter(item => item.id != producto.id);
-  // Guardar ese nuevo array en local storage
-  saveCarrito(nuevoCarrito);
-  // Mostrar el carrito actualizado
-  renderCarrito();
+  const productoABorrar = carrito.find(item => item.id === producto.id);
+
+  // Solo se ejecuta si el carrito tiene el producto que se quiere borrar
+  if (productoABorrar) {
+
+    // Borrar el producto del carrito
+    const index = carrito.indexOf(productoABorrar);
+    carrito.splice(index, 1);
+
+    // Guardar el carrito actualizado en local storage
+    saveCarrito(carrito);
+
+    // Mostrar alert producto eliminado del carrito
+    mostrarAlert('Producto eliminado del carrito');
+
+    // Mostrar el carrito actualizado
+    renderCarrito();
+  }
 }
 
 // Funcion para mostrar el carrito en el DOM
@@ -116,9 +126,13 @@ function renderCarrito() {
 
   const carrito = getCarrito();
   const contenedorCarrito = select('#carrito');
+  const cantidad = select('#cantidad');
   const total = select('#total');
 
-  total.innerHTML = `<h3>Total: $${calcularTotal()}</h3>`;
+  cantidad.innerText = calcularCantidad(carrito);
+  total.innerText = '$' + calcularTotal(carrito);
+
+  // Vaciar el contenido anterior antes de actualizarlo
   contenedorCarrito.innerHTML = '';
 
   // Iterar sobre el array de productos en el carrito
@@ -138,17 +152,30 @@ function renderCarrito() {
       <p>Subtotal: $${precio * cantidad}</p>
       </div>
     `;
-
+    // Agregar el div del producto al DOM
     contenedorCarrito.append(div);
   }
 }
 
 // Funcion para calcular el total de la compra
-function calcularTotal () {
-  const carrito = getCarrito();
-  const total = carrito.reduce((total, item) => total + item.cantidad * item.precio, 0);
-  return total;
+function calcularTotal (carrito) {
+  return carrito.reduce((total, item) => total + item.cantidad * item.precio, 0);
 }
+
+// Funcion para calcular la cantidad total de productos en el carrito
+function calcularCantidad(carrito) {
+  return carrito.reduce((total, item) => total + item.cantidad, 0);
+}
+
+// Funcion para mostrar Sweet Alert con distintos mensajes
+function mostrarAlert (texto) {
+  Swal.fire({
+    title: texto,
+    icon: 'success',
+    timer: 1000
+  })
+}
+
 
 // Vaciar local storage al cargar la pagina
 localStorage.clear();
