@@ -74,6 +74,14 @@ function addToCart(producto) {
     producto.cantidad = 1;
     carrito.push(producto);
   }
+
+  // Mostrar alert con Sweet Alert
+  Swal.fire({
+    title: 'Producto agregado al carrito!',
+    icon: 'success',
+    timer: 1200
+  })
+
   // Guardar el carrito en local storage
   saveCarrito(carrito)
   // Mostrar el carrito en el DOM
