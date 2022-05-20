@@ -76,7 +76,7 @@ function addToCart(producto) {
   }
 
   // Mostrar alert con Sweet Alert
-  mostrarAlert('Producto agregado al carrito');
+  // mostrarAlert('Producto agregado al carrito');
 
   // Guardar el carrito en local storage
   saveCarrito(carrito)
